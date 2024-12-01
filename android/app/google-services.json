@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "319454715447",
+    "project_id": "ub-850a5",
+    "storage_bucket": "ub-850a5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319454715447:android:d38e53764ff302473469b2",
+        "android_client_info": {
+          "package_name": "com.unigrab.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwm7XA1cvLatp1U4ihZCtAa3mjsc873uI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
