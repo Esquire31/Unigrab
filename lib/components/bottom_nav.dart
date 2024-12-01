@@ -14,34 +14,23 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int currentTabIndex = 0;
 
-  late List<Widget> pages;
-  late Widget currentPage;
-  late HomePage homePage;
-  late ProfilePage profilePage;
-  late OrderPage orderPage;
-
-  @override
-  void initState() {
-    homePage = HomePage();
-    orderPage = OrderPage();
-    profilePage = ProfilePage();
-    pages = [homePage, orderPage, profilePage];
-    currentPage = homePage;
-    super.initState();
-  }
+  final List<Widget> pages = [
+    HomePage(),
+    OrderPage(),
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         height: 65,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(0, 255, 255, 255),
         color: Colors.black,
         animationDuration: Duration(milliseconds: 500),
         onTap: (int index) {
           setState(() {
             currentTabIndex = index;
-            currentPage = pages[index];
           });
         },
         items: [
@@ -59,7 +48,7 @@ class _BottomNavState extends State<BottomNav> {
           ),
         ],
       ),
-      body: currentPage,
+      body: pages[currentTabIndex],
     );
   }
 }

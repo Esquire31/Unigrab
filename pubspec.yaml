@@ -69,6 +69,7 @@ flutter:
     - assets/pasta.jpeg
     - assets/cold_coffee.jpeg
     - assets/wrap.jpeg
+    - assets/profile.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
