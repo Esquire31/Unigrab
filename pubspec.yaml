@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  curved_navigation_bar: ^1.0.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -59,6 +60,15 @@ flutter:
 
   assets:
     - assets/background.png
+    - assets/google_logo.png
+    - assets/burger.jpeg
+    - assets/pizza.jpeg
+    - assets/ice_cream.jpeg
+    - assets/juice.jpeg
+    - assets/milkshake.jpeg
+    - assets/pasta.jpeg
+    - assets/cold_coffee.jpeg
+    - assets/wrap.jpeg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
