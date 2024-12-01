@@ -94,10 +94,10 @@ class LoginPage extends StatelessWidget {
                       },
                       style: ButtonStyle(
                         foregroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed) ||
-                                states.contains(MaterialState.hovered)) {
+                            WidgetStateProperty.resolveWith<Color>(
+                          (Set<WidgetState> states) {
+                            if (states.contains(WidgetState.pressed) ||
+                                states.contains(WidgetState.hovered)) {
                               return Colors.white70;
                             }
                             return Theme.of(context).primaryColor;
@@ -115,26 +115,26 @@ class LoginPage extends StatelessWidget {
                 ),
                 ElevatedButton(                  
                   style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.pressed) ||
-                      states.contains(MaterialState.hovered)) {
+                  minimumSize: WidgetStateProperty.all<Size>(Size(200, 50)),
+                  backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                    (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.pressed) ||
+                      states.contains(WidgetState.hovered)) {
                       return Colors.white;
                     }
                     return Colors.black;
                     },
                   ),
-                  foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.pressed) ||
-                      states.contains(MaterialState.hovered)) {
+                  foregroundColor: WidgetStateProperty.resolveWith<Color>(
+                    (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.pressed) ||
+                      states.contains(WidgetState.hovered)) {
                       return Colors.black;
                     }
                     return Colors.white;
                     },
                   ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                     side: BorderSide(color: Colors.white),
@@ -161,10 +161,10 @@ class LoginPage extends StatelessWidget {
                       Navigator.pushNamed(context, '/register');
                     },
                     style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                      (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.pressed) ||
-                          states.contains(MaterialState.hovered)) {
+                      foregroundColor: WidgetStateProperty.resolveWith<Color>(
+                      (Set<WidgetState> states) {
+                        if (states.contains(WidgetState.pressed) ||
+                          states.contains(WidgetState.hovered)) {
                         return Colors.white70;
                         }
                         return Theme.of(context).primaryColor;
