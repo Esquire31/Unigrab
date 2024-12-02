@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'register_page.dart';
+import 'canteen/canteen_login_page.dart'; // Import the CanteenLoginPage
 
 class LandingPage extends StatelessWidget {
   @override
@@ -123,6 +124,43 @@ class LandingPage extends StatelessWidget {
                       );
                     },
                     child: Text('Register'),
+                  ),
+                  SizedBox(height: 16.0),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all<Size>(Size(200, 50)),
+                      backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.pressed) ||
+                              states.contains(WidgetState.hovered)) {
+                            return Colors.white;
+                          }
+                          return Colors.black;
+                        },
+                      ),
+                      foregroundColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.pressed) ||
+                              states.contains(WidgetState.hovered)) {
+                            return Colors.black;
+                          }
+                          return Colors.white;
+                        },
+                      ),
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          side: BorderSide(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CanteenLoginPage()),
+                      );
+                    },
+                    child: Text('Canteen Login'),
                   ),
                 ],
               ),

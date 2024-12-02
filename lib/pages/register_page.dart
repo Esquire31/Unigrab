@@ -1,6 +1,37 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../components/bottom_nav.dart'; // Import the BottomNav page
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _register() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => BottomNav()),
+        );
+      } on FirebaseAuthException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.message ?? 'Registration failed')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,119 +78,136 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 32.0),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Full Name',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    prefixIcon: Icon(Icons.person),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    prefixIcon: Icon(Icons.email),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Phone Number',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    prefixIcon: Icon(Icons.phone),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    prefixIcon: Icon(Icons.lock),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Confirm Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    prefixIcon: Icon(Icons.lock),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    minimumSize: WidgetStateProperty.all<Size>(Size(200, 50)),
-                    backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                      (Set<WidgetState> states) {
-                        if (states.contains(WidgetState.pressed) ||
-                            states.contains(WidgetState.hovered)) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      },
-                    ),
-                    foregroundColor: WidgetStateProperty.resolveWith<Color>(
-                      (Set<WidgetState> states) {
-                        if (states.contains(WidgetState.pressed) ||
-                            states.contains(WidgetState.hovered)) {
-                          return Colors.black;
-                        }
-                        return Colors.white;
-                      },
-                    ),
-                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        side: BorderSide(color: Colors.white),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _nameController,
+                        style: TextStyle(color: Colors.white), // Set text color to white
+                        decoration: InputDecoration(
+                          labelText: 'Full Name',
+                          labelStyle: TextStyle(color: Colors.white70), // Set label text color to white
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          prefixIcon: Icon(Icons.person, color: Colors.white70),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
+                      SizedBox(height: 16.0),
+                      TextFormField(
+                        controller: _emailController,
+                        style: TextStyle(color: Colors.white), // Set text color to white
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(color: Colors.white70), // Set label text color to white
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          prefixIcon: Icon(Icons.email, color: Colors.white70),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16.0),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        style: TextStyle(color: Colors.white), // Set text color to white
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: Colors.white70), // Set label text color to white
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          prefixIcon: Icon(Icons.lock, color: Colors.white70),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16.0),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed) ||
+                                  states.contains(MaterialState.hovered)) {
+                                return Colors.white;
+                              }
+                              return Theme.of(context).primaryColor;
+                            },
+                          ),
+                          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed) ||
+                                  states.contains(MaterialState.hovered)) {
+                                return Colors.black;
+                              }
+                              return Colors.white;
+                            },
+                          ),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              side: BorderSide(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        onPressed: _register,
+                        child: Text('Sign Up'),
+                      ),
+                      SizedBox(height: 16.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Already have an account? ',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.white70,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.pressed) ||
+                                      states.contains(MaterialState.hovered)) {
+                                    return Colors.white70;
+                                  }
+                                  return Theme.of(context).primaryColor;
+                                },
+                              ),
+                            ),
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  onPressed: () {
-                    // Add register logic here
-                  },
-                  child: Text('Sign Up'),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Already have an account? ',
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      style: ButtonStyle(
-                      foregroundColor: WidgetStateProperty.resolveWith<Color>(
-                      (Set<WidgetState> states) {
-                        if (states.contains(WidgetState.pressed) ||
-                          states.contains(WidgetState.hovered)) {
-                        return Colors.white70;
-                        }
-                        return Theme.of(context).primaryColor;
-                      },
-                      ),
-                    ),
-                      child: Text('Login'),
-                    ),
-                  ],
                 ),
               ],
             ),

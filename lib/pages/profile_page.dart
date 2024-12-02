@@ -1,11 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../util/unigrabTheme.dart'; // Import the theme file
+import 'login_page.dart'; // Import the LoginPage for redirection after logout
 
 class ProfilePage extends StatelessWidget {
+  final User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: secondaryBackgroundColor, // Set the background color
+      appBar: AppBar(
+        title: Text('Profile'),
+        backgroundColor: primaryColor, // Set the AppBar color to match the theme
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -15,14 +35,14 @@ class ProfilePage extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 50.0,
-                backgroundImage: AssetImage('profile.png'), // Replace with actual profile picture asset
+                backgroundImage: AssetImage('assets/profile.png'), // Replace with actual profile picture asset
               ),
             ),
             SizedBox(height: 16.0),
             // User Name
             Center(
               child: Text(
-                'John Doe', // Replace with actual user name
+                user?.displayName ?? 'No Name', // Display user's name
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
@@ -34,7 +54,7 @@ class ProfilePage extends StatelessWidget {
             // User Email
             Center(
               child: Text(
-                'john.doe@example.com', // Replace with actual user email
+                user?.email ?? 'No Email', // Display user's email
                 style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.grey[600],
@@ -58,8 +78,12 @@ class ProfilePage extends StatelessWidget {
             // Logout Button
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  // Handle logout
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: secondaryButtonColor, // Set the button color to match the theme

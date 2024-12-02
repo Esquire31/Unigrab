@@ -1,13 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../components/bottom_nav.dart'; // Import the BottomNav page
+import 'package:firebase_auth/firebase_auth.dart';
+import 'canteen_home_page.dart'; // Import the CanteenHomePage
 
-class LoginPage extends StatefulWidget {
+class CanteenLoginPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _CanteenLoginPageState createState() => _CanteenLoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _CanteenLoginPageState extends State<CanteenLoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
         );
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => BottomNav()),
+          MaterialPageRoute(builder: (context) => CanteenHomePage()),
         );
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -31,30 +31,10 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Future<void> _forgotPassword() async {
-    if (_emailController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter your email')),
-      );
-      return;
-    }
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: _emailController.text,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Password reset email sent')),
-      );
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message ?? 'Error sending password reset email')),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: <Widget>[
           Positioned(
@@ -65,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
               height: MediaQuery.of(context).size.height / 2,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('background.png'),
+                  image: AssetImage('assets/background.png'),
                   fit: BoxFit.cover,
                   alignment: Alignment.bottomCenter,
                   colorFilter: ColorFilter.mode(
@@ -82,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Welcome Back!',
+                  'Canteen Login',
                   style: TextStyle(
                     fontSize: 48.0,
                     fontWeight: FontWeight.bold,
@@ -91,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  'Login into your account',
+                  'Login to manage your canteen',
                   style: TextStyle(
                     fontSize: 18.0,
                     color: Colors.white70,
@@ -141,48 +121,6 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                       SizedBox(height: 16.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Checkbox(
-                                value: true,
-                                onChanged: (bool? value) {
-                                  // Handle remember me logic here
-                                },
-                              ),
-                              Text(
-                                'Remember me',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.white70,
-                                ),
-                              ),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: _forgotPassword,
-                            style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.pressed) ||
-                                      states.contains(MaterialState.hovered)) {
-                                    return Colors.white70;
-                                  }
-                                  return Theme.of(context).primaryColor;
-                                },
-                              ),
-                            ),
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyle(
-                                fontSize: 14.0,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                       ElevatedButton(
                         style: ButtonStyle(
                           minimumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
@@ -214,36 +152,6 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: _login,
                         child: Text('Login'),
                       ),
-                      SizedBox(height: 16.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Don\'t have an account? ',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.white70,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/register');
-                            },
-                            style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.pressed) ||
-                                      states.contains(MaterialState.hovered)) {
-                                    return Colors.white70;
-                                  }
-                                  return Theme.of(context).primaryColor;
-                                },
-                              ),
-                            ),
-                            child: Text('Register'),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
@@ -252,7 +160,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ],
       ),
-      backgroundColor: Colors.black,
     );
   }
 }

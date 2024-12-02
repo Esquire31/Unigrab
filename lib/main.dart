@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'firebase_options.dart'; // Import the Firebase options
 import 'pages/landing_page.dart';
 import 'pages/login_page.dart';
 import 'pages/register_page.dart';
-import 'components/bottom_nav.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeFirebase(); // Initialize Firebase
   runApp(const MyApp());
 }
 
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BottomNav(), // Use the LandingPage
+      home: LandingPage(), // Use the LandingPage
       routes: {
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),

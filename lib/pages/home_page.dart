@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'canteen_menu.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -49,7 +50,7 @@ class HomePage extends StatelessWidget {
               SizedBox(height: 4.0),
               // What are you Cravin? Subheading
               Text(
-                'What are you Cravin?',
+                'Whatcha Cravin?',
                 style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
@@ -108,10 +109,22 @@ class HomePage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
-                  _buildCanteenItem('Canteen 1', 'burger.jpeg', 'Vegetarian'),
-                  _buildCanteenItem('Canteen 2', 'pizza.jpeg', 'Non-Vegetarian'),
-                  _buildCanteenItem('Canteen 3', 'ice_cream.jpeg', 'Mixed'),
-                  _buildCanteenItem('Canteen 4', 'cold_coffee.jpeg', 'Drinks'),
+                  _buildCanteenItem(context, 'Canteen 1', 'burger.jpeg', 'Vegetarian', [
+                    {'name': 'Burger', 'price': 60},
+                    {'name': 'Pizza', 'price': 90},
+                  ]),
+                  _buildCanteenItem(context, 'Canteen 2', 'pizza.jpeg', 'Non-Vegetarian', [
+                    {'name': 'Cold Coffee', 'price': 50},
+                    {'name': 'Wrap', 'price': 80},
+                  ]),
+                  _buildCanteenItem(context, 'Canteen 3', 'ice_cream.jpeg', 'Mixed', [
+                    {'name': 'Pasta', 'price': 110},
+                    {'name': 'Ice Cream', 'price': 70},
+                  ]),
+                  _buildCanteenItem(context, 'Canteen 4', 'cold_coffee.jpeg', 'Drinks', [
+                    {'name': 'Milkshakes', 'price': 80},
+                    {'name': 'Juice', 'price': 40},
+                  ]),
                 ],
                 ),
             ],
@@ -177,12 +190,17 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildCanteenItem(String name, String imageAsset, String foodType) {
+  Widget _buildCanteenItem(BuildContext context, String name, String imageAsset, String foodType, List<Map<String, dynamic>> menuItems) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: InkWell(
         onTap: () {
-          // Handle canteen item tap
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CanteenMenuPage(canteenName: name, menuItems: menuItems),
+            ),
+          );
         },
         child: Container(
           height: 200.0, // Adjust the height as needed
