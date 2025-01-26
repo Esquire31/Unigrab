@@ -1,16 +1,23 @@
-# app
+# Unigrap - Food Ordering App  
 
-A new Flutter project.
+## Project Description  
+Unigrap is an all-in-one food ordering application that seamlessly connects users to restaurants, allowing them to browse menus, customize orders, and track delivery status in real time. Developed with a combination of **C++**, **Dart**, **Swift**, **CMake**, **HTML**, and **Flutter**, this app aims to provide a smooth and responsive user experience across platforms.  
 
-## Getting Started
+## Key Features  
+- **User-Friendly Interface**: Clean and intuitive UI for browsing restaurants and ordering food.  
+- **Cross-Platform Support**: Built with Flutter to support both iOS and Android devices.  
+- **Real-Time Order Tracking**: Stay updated on the status of your food order.  
+- **Secure Payment Options**: Integrated with multiple payment gateways for seamless transactions.  
+- **Customizable Orders**: Customize dishes with specific preferences or dietary restrictions.  
 
-This project is a starting point for a Flutter application.
+## Technology Stack  
 
-A few resources to get you started if this is your first Flutter project:
+### Frontend:  
+- **Flutter**: For building cross-platform interfaces.  
+- **Dart**: Primary language for app logic.  
+- **Swift**: iOS-specific integrations.  
+- **HTML**: Web interface components.  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Backend:  
+- **C++**: For server-side logic.  
+- **CMake**: Build system for project dependencies.  
